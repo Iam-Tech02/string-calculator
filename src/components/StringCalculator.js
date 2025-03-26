@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, TextareaAutosize, Button, Typography, Box, Alert } from "@mui/material";
-import { add } from "../utils/CalculatorLogic";  // Import reusable logic
+import { add } from "../utils/CalculatorLogic";
 
 const StringCalculator = () => {
     const [input, setInput] = useState("");
@@ -9,7 +9,7 @@ const StringCalculator = () => {
 
     const handleChange = (e) => {
         setInput(e.target.value);
-        setError("");  // Clear previous errors
+        setError("");  
     };
 
     const handleCalculate = () => {

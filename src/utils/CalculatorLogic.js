@@ -3,19 +3,33 @@ export const add = (numbers) => {
 
     let delimiter = /,|\n/;  
 
-    const customDelimiterMatch = numbers.match(/^\/\/(.+)\n(.*)/);
+    const customDelimiterMatch = numbers.match(/^\/\/(\[.*\])\n(.*)/);
 
     if (customDelimiterMatch) {
-        const rawDelimiter = customDelimiterMatch[1];
-        const escapedDelimiter = rawDelimiter.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const rawDelimiters = customDelimiterMatch[1];   
+        numbers = customDelimiterMatch[2];               
 
-        delimiter = new RegExp(escapedDelimiter);
-        numbers = customDelimiterMatch[2];
+        const delimiterRegex = /\[(.*?)\]/g;
+        let match;
+        const delimiters = [];
+
+        while ((match = delimiterRegex.exec(rawDelimiters)) !== null) {
+            delimiters.push(match[1]);
+        }
+
+        const escapedDelimiters = delimiters.map((delim) =>
+            delim.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')  
+        );
+
+        delimiter = new RegExp(escapedDelimiters.join('|'));
     }
 
     const sanitizedNumbers = numbers.split(delimiter).map((num) => num.trim());
 
-    const nums = sanitizedNumbers.map((num) => parseInt(num) || 0);
+    const nums = sanitizedNumbers
+        .map((num) => parseInt(num) || 0)
+        .filter((num) => num <= 1000);  
+
     const negatives = nums.filter((num) => num < 0);
 
     if (negatives.length > 0) {

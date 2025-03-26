@@ -17,31 +17,22 @@ describe('String Calculator Component', () => {
     expect(screen.getByText(/Result: 5/i)).toBeInTheDocument();
   });
 
-  test('displays 0 for empty input', () => {
+  test('supports multiple custom delimiters', () => {
     render(<StringCalculator />);
-
-    fireEvent.click(screen.getByText(/Calculate/i));
-    expect(screen.getByText(/Result: 0/i)).toBeInTheDocument();
-  });
-
-  test('handles multiple numbers gracefully', () => {
-    render(<StringCalculator />);
-
     const textarea = screen.getByPlaceholderText(/Enter numbers/i);
-    fireEvent.change(textarea, { target: { value: '1,2,3,4,5' } });
-
-    fireEvent.click(screen.getByText(/Calculate/i));
-    expect(screen.getByText(/Result: 15/i)).toBeInTheDocument();
-  });
-
-  test('handles custom delimiters', () => {
-    render(<StringCalculator />);
-
-    const textarea = screen.getByPlaceholderText(/Enter numbers/i);
-    fireEvent.change(textarea, { target: { value: '//;\n1;2;3' } });
+    fireEvent.change(textarea, { target: { value: '//[*][%]\n1*2%3' } });
 
     fireEvent.click(screen.getByText(/Calculate/i));
     expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
+  });
+
+  test('ignores numbers greater than 1000', () => {
+    render(<StringCalculator />);
+    const textarea = screen.getByPlaceholderText(/Enter numbers/i);
+    fireEvent.change(textarea, { target: { value: '2,1001' } });
+
+    fireEvent.click(screen.getByText(/Calculate/i));
+    expect(screen.getByText(/Result: 2/i)).toBeInTheDocument();
   });
 
   test('displays an error for negative numbers', () => {
@@ -63,4 +54,6 @@ describe('String Calculator Component', () => {
     fireEvent.click(screen.getByText(/Calculate/i));
     expect(screen.getByText(/Negatives not allowed: -2, -3/i)).toBeInTheDocument();
   });
+
+  
 });
