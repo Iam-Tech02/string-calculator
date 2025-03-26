@@ -10,7 +10,7 @@ describe('String Calculator Component', () => {
   test('calculates and displays result for valid input', () => {
     render(<StringCalculator />);
 
-    const textarea = screen.getByPlaceholderText(/Enter numbers separated by commas or new lines/i);
+    const textarea = screen.getByPlaceholderText(/Enter numbers/i);
     fireEvent.change(textarea, { target: { value: '2,3' } });
 
     fireEvent.click(screen.getByText(/Calculate/i));
@@ -27,40 +27,40 @@ describe('String Calculator Component', () => {
   test('handles multiple numbers gracefully', () => {
     render(<StringCalculator />);
 
-    const textarea = screen.getByPlaceholderText(/Enter numbers separated by commas or new lines/i);
+    const textarea = screen.getByPlaceholderText(/Enter numbers/i);
     fireEvent.change(textarea, { target: { value: '1,2,3,4,5' } });
 
     fireEvent.click(screen.getByText(/Calculate/i));
     expect(screen.getByText(/Result: 15/i)).toBeInTheDocument();
   });
 
-  test('handles new lines as delimiters', () => {
+  test('handles custom delimiters', () => {
     render(<StringCalculator />);
 
-    const textarea = screen.getByPlaceholderText(/Enter numbers separated by commas or new lines/i);
-    fireEvent.change(textarea, { target: { value: '1\n2,3' } });
+    const textarea = screen.getByPlaceholderText(/Enter numbers/i);
+    fireEvent.change(textarea, { target: { value: '//;\n1;2;3' } });
 
     fireEvent.click(screen.getByText(/Calculate/i));
     expect(screen.getByText(/Result: 6/i)).toBeInTheDocument();
   });
 
-  test('handles mixed delimiters', () => {
+  test('displays an error for negative numbers', () => {
     render(<StringCalculator />);
 
-    const textarea = screen.getByPlaceholderText(/Enter numbers separated by commas or new lines/i);
-    fireEvent.change(textarea, { target: { value: '1\n2,3,4\n5' } });
+    const textarea = screen.getByPlaceholderText(/Enter numbers/i);
+    fireEvent.change(textarea, { target: { value: '1,-2,3' } });
 
     fireEvent.click(screen.getByText(/Calculate/i));
-    expect(screen.getByText(/Result: 15/i)).toBeInTheDocument();
+    expect(screen.getByText(/Negatives not allowed: -2/i)).toBeInTheDocument();
   });
 
-  test('displays 0 for invalid input', () => {
+  test('displays multiple negatives in the error message', () => {
     render(<StringCalculator />);
 
-    const textarea = screen.getByPlaceholderText(/Enter numbers separated by commas or new lines/i);
-    fireEvent.change(textarea, { target: { value: 'abc' } });
+    const textarea = screen.getByPlaceholderText(/Enter numbers/i);
+    fireEvent.change(textarea, { target: { value: '1,-2,-3,4' } });
 
     fireEvent.click(screen.getByText(/Calculate/i));
-    expect(screen.getByText(/Result: 0/i)).toBeInTheDocument();
+    expect(screen.getByText(/Negatives not allowed: -2, -3/i)).toBeInTheDocument();
   });
 });

@@ -1,18 +1,24 @@
 import React, { useState } from "react";
-import { Container, TextareaAutosize, Button, Typography, Box } from "@mui/material";
+import { Container, TextareaAutosize, Button, Typography, Box, Alert } from "@mui/material";
 import { add } from "../utils/CalculatorLogic";  // Import reusable logic
 
 const StringCalculator = () => {
     const [input, setInput] = useState("");
-    const [result, setResult] = useState(0);
+    const [result, setResult] = useState(null);
+    const [error, setError] = useState("");
 
     const handleChange = (e) => {
         setInput(e.target.value);
+        setError("");  // Clear previous errors
     };
 
     const handleCalculate = () => {
-        const sum = add(input);
-        setResult(sum);
+        try {
+            const sum = add(input);
+            setResult(sum);
+        } catch (error) {
+            setError(error.message);
+        }
     };
 
     return (
@@ -22,7 +28,7 @@ const StringCalculator = () => {
 
                 <TextareaAutosize
                     minRows={4}
-                    placeholder="Enter numbers separated by commas or new lines"
+                    placeholder="Enter numbers (use // for custom delimiters)"
                     value={input}
                     onChange={handleChange}
                     style={{
@@ -39,7 +45,8 @@ const StringCalculator = () => {
                     Calculate
                 </Button>
 
-                <Typography variant="h6">Result: {result}</Typography>
+                {error && <Alert severity="error">{error}</Alert>}
+                {result !== null && <Typography variant="h6">Result: {result}</Typography>}
             </Box>
         </Container>
     );
