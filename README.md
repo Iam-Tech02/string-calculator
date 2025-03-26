@@ -6,13 +6,14 @@ A **String Calculator** built with **React** using the **Test-Driven Development
 
 ## 🚀 **Features**
 
-✅ Add numbers separated by commas (e.g., `1,2`)\
-✅ Return `0` for an empty string input\
-✅ Return the number itself for a single input\
-✅ Return the sum of two numbers separated by a comma\
-✅ Ignore invalid inputs (e.g., `2,a` → result = `2`)\
-✅ Real-time calculation\
-✅ Fully tested using **Jest** and **React Testing Library**\
+✅ Add numbers separated by commas (e.g., `1,2`)
+✅ Return `0` for an empty string input
+✅ Return the number itself for a single input
+✅ Return the sum of two numbers separated by a comma
+✅ Ignore invalid inputs (e.g., `2,a` → result = `2`)
+✅ Real-time calculation
+✅ 
+✅ Fully tested using **Jest** and **React Testing Library**
 ✅ Styled with **MUI**
 
 ---
@@ -22,9 +23,7 @@ A **String Calculator** built with **React** using the **Test-Driven Development
 - **React.js** – Frontend framework
 - **Jest** – Unit testing framework
 - **React Testing Library** – For testing React components
-- **Tailwind CSS** – Styling
 - **MUI (Material-UI)** – UI components and styling
-- **Vite** – For a fast development environment
 
 ---
 
@@ -33,7 +32,7 @@ A **String Calculator** built with **React** using the **Test-Driven Development
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/string-calculator.git
+git clone https://github.com/Iam-Tech02/string-calculator.git
 cd string-calculator
 ```
 
