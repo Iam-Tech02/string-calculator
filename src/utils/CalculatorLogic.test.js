@@ -17,6 +17,22 @@ describe("String Calculator Logic", () => {
         expect(add("1,2,3,4,5")).toBe(15);
     });
 
+    test("handles new lines as delimiters", () => {
+        expect(add("1\n2,3")).toBe(6);
+    });
+
+    test("handles only new lines between numbers", () => {
+        expect(add("2\n4\n6")).toBe(12);
+    });
+
+    test("handles mixed delimiters (commas and new lines)", () => {
+        expect(add("1\n2,3,4\n5")).toBe(15);
+    });
+
+    test("ignores leading and trailing spaces", () => {
+        expect(add(" 2 , 3 \n 4 ")).toBe(9);
+    });
+
     test("returns 0 for invalid input", () => {
         expect(add("abc")).toBe(0);
     });
@@ -25,15 +41,11 @@ describe("String Calculator Logic", () => {
         expect(add("2,abc,3")).toBe(5);
     });
 
-    test("ignores leading and trailing spaces", () => {
-        expect(add(" 2 , 3 , 4 ")).toBe(9);
-    });
-
-    test("handles all invalid numbers gracefully", () => {
-        expect(add("abc,xyz")).toBe(0);
-    });
-
     test("handles negative and zero values", () => {
-        expect(add("5,-2,0,3")).toBe(6);  // -2 and 0 are properly handled
+        expect(add("5,-2,0,3")).toBe(6);  // Negative and zero handled correctly
+    });
+
+    test("returns 0 for all invalid inputs", () => {
+        expect(add("abc,xyz")).toBe(0);
     });
 });

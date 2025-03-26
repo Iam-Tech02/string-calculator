@@ -1,8 +1,9 @@
 export const add = (numbers) => {
     if (!numbers) return 0;
 
-    const nums = numbers
-        .split(",")
+    const sanitizedNumbers = numbers.replace(/\n/g, ",").split(",");
+
+    const nums = sanitizedNumbers
         .map((num) => num.trim())
         .map((num) => parseInt(num) || 0);
 

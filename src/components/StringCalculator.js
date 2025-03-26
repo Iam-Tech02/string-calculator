@@ -22,7 +22,7 @@ const StringCalculator = () => {
 
                 <TextareaAutosize
                     minRows={4}
-                    placeholder="Enter numbers separated by commas"
+                    placeholder="Enter numbers separated by commas or new lines"
                     value={input}
                     onChange={handleChange}
                     style={{
